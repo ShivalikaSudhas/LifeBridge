@@ -21,6 +21,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google/genai": "^2.15.0",
     "axios": "^1.13.4",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
