@@ -1,30 +1,39 @@
 {
-  "name": "emergency",
+  "name": "lifebridge-emergency-dispatch-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Emergency request and dispatch management backend using Node.js, Express, PostgreSQL, Redis, and AI priority integration",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "test": "jest --detectOpenHandles --forceExit"
   },
-  "keywords": [],
+  "keywords": [
+    "emergency",
+    "dispatch",
+    "fastapi",
+    "express",
+    "redis",
+    "postgresql",
+    "mvc"
+  ],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
-    "axios": "^1.19.0",
-    "dotenv": "^17.4.2",
-    "express": "^5.2.1",
-    "joi": "^18.2.3",
-    "morgan": "^1.11.0",
-    "pg": "^8.22.0",
+    "axios": "^1.13.4",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "joi": "^17.13.3",
+    "morgan": "^1.10.0",
+    "pg": "^8.16.0",
     "pg-hstore": "^2.3.4",
-    "redis": "^6.1.0",
-    "sequelize": "^6.37.8",
-    "winston": "^3.19.0"
+    "redis": "^5.1.0",
+    "sequelize": "^6.37.7",
+    "winston": "^3.17.0"
   },
   "devDependencies": {
-    "jest": "^30.4.2",
-    "nodemon": "^3.1.14",
-    "supertest": "^7.2.2"
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.9",
+    "supertest": "^7.1.4"
   }
 }
