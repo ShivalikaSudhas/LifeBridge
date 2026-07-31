@@ -10,12 +10,12 @@ async function seed() {
     // 1. Create sample users
     const [user1] = await User.findOrCreate({
       where: { id: 1 },
-      defaults: { name: 'John Doe', phone: '+919876543210' },
+      defaults: { name: 'shivalika', phone: '+919876543210' },
     });
 
     const [user2] = await User.findOrCreate({
       where: { id: 2 },
-      defaults: { name: 'Jane Smith', phone: '+919812345678' },
+      defaults: { name: 'vidyashree', phone: '+919812345678' },
     });
 
     // 2. Create sample responders
