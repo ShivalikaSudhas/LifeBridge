@@ -1,18 +1,25 @@
-const emergencyService = require('../services/emergencyService');
 const { success } = require('../utils/response');
+const geminiService = require('../services/geminiService');
+const keywordClassifier = require('../services/keywordClassifier');
+const logger = require('../utils/logger');
 
 /**
  * POST /api/v1/ai/classify
- * Endpoint to classify emergency priority from incident description.
- * Uses external Python AI microservice when available, with rule-based fallback.
+ * Try Gemini first; on any failure fall back to the rule-based classifier.
  */
 const classifyPriority = async (req, res, next) => {
+  const { description } = req.body;
   try {
-    const { description } = req.body;
-    const data = await emergencyService.classifyPriority(description);
-    return success(res, data, 'Priority classified successfully', 200);
+    const aiResult = await geminiService.classifyPriorityWithGemini(description);
+    return success(res, aiResult, 'Priority classified (AI)', 200);
   } catch (err) {
-    next(err);
+    logger.warn('Gemini classification failed, using keyword fallback: %s', err.message || err);
+    try {
+      const fallback = keywordClassifier.classify(description);
+      return success(res, fallback, 'Priority classified (fallback)', 200);
+    } catch (fallbackErr) {
+      next(fallbackErr);
+    }
   }
 };
 
