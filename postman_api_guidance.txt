@@ -1,0 +1,65 @@
+LifeBridge Postman API Guide
+
+Base URL: http://localhost:3000
+
+1️⃣ Check Server Health
+- HTTP Method: GET (green)
+- URL: http://localhost:3000/health
+- Body: None
+
+2️⃣ Create Emergency Request
+- HTTP Method: POST (orange/yellow)
+- URL: http://localhost:3000/api/v1/emergency
+- Body (raw -> JSON):
+{
+  "user_id": 1,
+  "location": "MG Road, Bengaluru, Karnataka",
+  "description": "Patient experiencing severe chest pain and difficulty breathing"
+}
+
+3️⃣ View Pending Priority Queue
+- HTTP Method: GET (green)
+- URL: http://localhost:3000/api/v1/emergency/pending?page=1&limit=10
+- Body: None
+
+4️⃣ Assign Responder to Request
+- HTTP Method: POST (orange/yellow) (Note: Must be POST, not PUT!)
+- URL: http://localhost:3000/api/v1/dispatch/assign
+- Body (raw -> JSON):
+{
+  "request_id": 2,
+  "responder_id": 1
+}
+
+5️⃣ Update Emergency Status Lifecycle
+- HTTP Method: PUT (blue)
+- URL: http://localhost:3000/api/v1/emergency/status
+- Body (raw -> JSON):
+{
+  "request_id": 2,
+  "status": "DISPATCHED"
+}
+(Allowed status sequence: ASSIGNED -> DISPATCHED -> IN_PROGRESS -> RESOLVED)
+
+6️⃣ View Active Emergencies
+- HTTP Method: GET (green)
+- URL: http://localhost:3000/api/v1/emergency/active?page=1&limit=10
+- Body: None
+
+7️⃣ Send Dispatch Notification
+- HTTP Method: POST (orange/yellow)
+- URL: http://localhost:3000/api/v1/dispatch/notify/2
+- Body: None
+
+8️⃣ AI Priority Classification
+- HTTP Method: POST (orange/yellow)
+- URL: http://localhost:3000/api/v1/ai/classify
+- Body (raw -> JSON):
+{
+  "description": "Building fire reported on second floor with trapped residents"
+}
+
+💡 Quick Check for Postman Errors:
+- Cannot GET -> You used GET instead of POST
+- Cannot PUT -> You used PUT instead of POST (like on /dispatch/assign)
+- Invalid transition -> You tried to update status before assigning a responder first

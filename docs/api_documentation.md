@@ -3,7 +3,21 @@
 ## Base URL
 `http://localhost:3000/api/v1`
 
+## 📋 API Overview Summary
+
+| # | Endpoint | Method | Purpose | Redis Interaction | DB Models |
+|---|---|---|---|---|---|
+| **1** | `/api/v1/emergency` | `POST` | Create emergency & auto-assign priority | Enqueues into Sorted Set | `User`, `EmergencyRequest` |
+| **2** | `/api/v1/emergency/pending` | `GET` | Retrieve pending queue sorted by priority | Reads Sorted Set (`ZREVRANGE`) | `EmergencyRequest`, `User` |
+| **3** | `/api/v1/dispatch/assign` | `POST` | Assign responder to pending request | Removes from Sorted Set (`ZREM`) | `DispatchRecord`, `Responder` |
+| **4** | `/api/v1/emergency/status` | `PUT` | Update state lifecycle status | Publishes `status_updated` event | `EmergencyRequest`, `Responder` |
+| **5** | `/api/v1/emergency/active` | `GET` | Get ongoing emergencies & responders | — | `EmergencyRequest`, `DispatchRecord` |
+| **6** | `/api/v1/dispatch/notify/:request_id` | `POST` | Trigger dispatch notification event | Publishes `notification_sent` event | `Notification`, `DispatchRecord` |
+| **7** | `/api/v1/ai/classify` | `POST` | Classify incident urgency priority | — | — |
+| **8** | `/health` | `GET` | Check server and runtime health | — | — |
+
 ---
+
 
 ## 1. Create Emergency Request
 
@@ -14,7 +28,7 @@ Creates a new emergency request, auto-classifies urgency priority (via Gemini AI
 - **Headers:** `Content-Type: application/json`
 
 ### Request Body
-```json
+```json 
 {
   "user_id": 1,
   "location": "MG Road, Bengaluru, Karnataka",
