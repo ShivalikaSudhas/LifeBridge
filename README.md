@@ -82,8 +82,8 @@ docker-compose down
    Execute SQL seed queries or insert sample Users and Responders:
    ```sql
    INSERT INTO users (name, phone, created_at) VALUES 
-   ('John Doe', '+919876543210', NOW()),
-   ('Jane Smith', '+919812345678', NOW());
+   ('shivalika', '+919876543210', NOW()),
+   ('vidyashree', '+919812345678', NOW());
 
    INSERT INTO responders (name, responder_type, availability, current_location, created_at) VALUES 
    ('Ambulance Unit 101', 'AMBULANCE', 'AVAILABLE', 'Central Station', NOW()),
